@@ -1,12 +1,12 @@
 <security>
-    <access>
-        <servlet-name>assignRole</servlet-name>
-        <roles>
-            <role>
-                admin
-            </role>
-        </roles>
-    </access>
+<!--    <access>-->
+<!--        <servlet-name>assignRole</servlet-name>-->
+<!--        <roles>-->
+<!--            <role>-->
+<!--                admin-->
+<!--            </role>-->
+<!--        </roles>-->
+<!--    </access>-->
     <access>
         <servlet-name>save</servlet-name>
         <roles>
