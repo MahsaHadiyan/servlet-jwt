@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Users;
+import com.example.demo.tools.JPAProvider;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceContext;
 
 /**
  * Created by M.Hadiyan
@@ -20,12 +20,11 @@ public class UserService {
         return USER_SERVICE;
     }
 
-
-    @PersistenceContext
     EntityManager entityManager;
 
 
     public void save(Users users) {
+        entityManager= JPAProvider.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(users);

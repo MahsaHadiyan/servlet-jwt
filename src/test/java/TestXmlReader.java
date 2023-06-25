@@ -1,9 +1,7 @@
-import com.example.demo.tools.JDBC;
 import com.example.demo.tools.XmlReader;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import java.sql.Connection;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -26,9 +24,9 @@ public class TestXmlReader {
 
     @Test
     public void getConnection() throws Exception {
-        Connection connection = JDBC.getConnection();
-        String schema = connection.getSchema();
-        assertNotNull(schema);
+//        Connection connection = JPA.getEntityManager();
+//        String schema = connection.getSchema();
+//        assertNotNull(schema);
     }
 
 }

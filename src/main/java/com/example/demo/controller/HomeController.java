@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.jwtWrapper.JWTGenerator;
 import com.example.demo.tools.CacheContainer;
+import com.example.demo.tools.JPAProvider;
 import org.jose4j.jwk.RsaJsonWebKey;
 import org.jose4j.jwt.JwtClaims;
 import org.jose4j.jwt.MalformedClaimException;
@@ -12,7 +13,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
