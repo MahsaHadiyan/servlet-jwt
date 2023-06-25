@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.jwtWrapper.JWTGenerator;
+import com.example.demo.tools.CacheContainer;
 import org.jose4j.jwk.RsaJsonWebKey;
 import org.jose4j.jwt.JwtClaims;
 import org.jose4j.jwt.MalformedClaimException;
@@ -13,10 +14,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class HomeController extends HttpServlet {
 
+    @Override
+    public void init() throws ServletException {
+        CacheContainer.getInstance().createCacheContainer("access", Arrays.asList("servlet-name","roles"));
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
@@ -28,7 +34,6 @@ public class HomeController extends HttpServlet {
             throw new RuntimeException(e);
         }
         List<String> roles = new ArrayList<>();
-        roles.add("person");
         roles.add("default");
         JwtClaims jwtClaims = JWTGenerator.getInstance().getJwtClaims(name, roles);
         String jwtSignature = null;
@@ -43,11 +48,6 @@ public class HomeController extends HttpServlet {
         } catch (MalformedClaimException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().println("POST EXECUTED...");
     }
 
 }

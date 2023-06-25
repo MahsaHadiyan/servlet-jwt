@@ -1,17 +1,20 @@
 <%--
   Created by IntelliJ IDEA.
-  User: JavaSchool
-  Date: 4/29/2022
-  Time: 5:18 PM
+  User: m_hadian
+  Date: 6/25/2023
+  Time: 7:46 AM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Home</title>
+    <title>ثبت</title>
 </head>
 <body>
-<p>خوش آمدید!!</p>
-<a href="/login.jsp">ورود</a>
+<form action="/save.do">
+  <input type="text" name="name"/>
+  <input type="text" name="family"/>
+  <input type="submit"/>
+</form>
 </body>
 </html>

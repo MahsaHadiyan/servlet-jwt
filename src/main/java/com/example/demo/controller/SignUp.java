@@ -31,11 +31,6 @@ public class SignUp extends HttpServlet {
 
 
     @Override
-    public void init() throws ServletException {
-        CacheContainer.getInstance().createCacheContainer("access", Arrays.asList("servlet-name","roles"));
-    }
-
-    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String userName = req.getParameterValues("username")[0];
         String jwt = null;

@@ -8,9 +8,11 @@ import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.lang.JoseException;
 
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,34 +21,46 @@ import java.util.List;
  * Date: 6/24/2023
  * Time: 9:14 AM
  **/
-@WebServlet(name = "Login", value = "/login")
+@WebServlet(name = "Login", value = "/login.do")
 public class Login extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        String name = req.getParameterValues("username")[0];
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String userName = req.getParameterValues("username")[0];
+        String jwt = null;
+        try {
+            jwt = setJwt(userName);
+        } catch (JoseException e) {
+            throw new RuntimeException(e);
+        }
+        Cookie cookie = new Cookie("jwt", jwt);
+        resp.addCookie(cookie);
+        resp.sendRedirect("/middle.jsp");
+    }
+
+    private static String setJwt(String name) throws JoseException {
         RsaJsonWebKey rsaJsonWebKey = null;
         try {
             rsaJsonWebKey = JWTGenerator.getInstance().getRsaJsonWebKey();
         } catch (JoseException e) {
-            throw new RuntimeException(e);
+            throw new JoseException("");
         }
         List<String> roles = new ArrayList<>();
-        roles.add("person");
         roles.add("default");
         JwtClaims jwtClaims = JWTGenerator.getInstance().getJwtClaims(name, roles);
         String jwtSignature = null;
         try {
             jwtSignature = JWTGenerator.getInstance().getJwtSignature(rsaJsonWebKey, jwtClaims);
         } catch (JoseException e) {
-            throw new RuntimeException(e);
+            throw new JoseException("e");
         }
         JwtConsumer jwtConsumer = JWTGenerator.getInstance().getJwtConsumer(rsaJsonWebKey);
         try {
             JWTGenerator.getInstance().validate(jwtSignature, jwtConsumer);
         } catch (MalformedClaimException e) {
-            throw new RuntimeException(e);
+            throw new JoseException("");
         }
+        return jwtSignature;
     }
 
 }

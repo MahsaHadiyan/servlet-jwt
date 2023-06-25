@@ -9,6 +9,7 @@
     <servlet>
         <servlet-name>main</servlet-name>
         <servlet-class>com.example.demo.controller.HomeController</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>

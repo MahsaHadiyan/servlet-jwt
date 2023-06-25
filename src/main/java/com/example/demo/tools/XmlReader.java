@@ -34,7 +34,7 @@ public class XmlReader {
         Map<String, List<String>> map = new HashMap<>();
         try {
             //creating a constructor of file class and parsing an XML file
-            File file = new File("C:\\Root\\Project\\demo\\src\\main\\resources\\roles.xml");
+            File file = new File("C:\\Root\\Project\\servlet-jwt\\src\\main\\resources\\roles.xml");
             //an instance of factory that gives a document builder
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             //an instance of builder to parse the specified xml file

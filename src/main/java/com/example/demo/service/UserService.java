@@ -12,6 +12,15 @@ import javax.persistence.PersistenceContext;
  * Time: 11:20 AM
  **/
 public class UserService {
+
+    private static final UserService USER_SERVICE= new UserService();
+
+
+    public static UserService getInstance(){
+        return USER_SERVICE;
+    }
+
+
     @PersistenceContext
     EntityManager entityManager;
 
@@ -22,6 +31,5 @@ public class UserService {
         entityManager.persist(users);
         transaction.commit();
         entityManager.close();
-
     }
 }

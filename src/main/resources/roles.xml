@@ -1,6 +1,6 @@
 <security>
     <access>
-        <servlet-name>AssignRole</servlet-name>
+        <servlet-name>assignRole</servlet-name>
         <roles>
             <role>
                 admin
@@ -8,28 +8,28 @@
         </roles>
     </access>
     <access>
-        <servlet-name>Save</servlet-name>
+        <servlet-name>save</servlet-name>
         <roles>
             <role>person</role>
             <role>admin</role>
         </roles>
     </access>
     <access>
-        <servlet-name>Update</servlet-name>
+        <servlet-name>update</servlet-name>
         <roles>
             <role>person</role>
             <role>admin</role>
         </roles>
     </access>
     <access>
-        <servlet-name>Delete</servlet-name>
+        <servlet-name>delete</servlet-name>
         <roles>
             <role>person</role>
             <role>admin</role>
         </roles>
     </access>
     <access>
-        <servlet-name>FindAll</servlet-name>
+        <servlet-name>findAll</servlet-name>
         <roles>
             <role>person</role>
             <role>admin</role>
