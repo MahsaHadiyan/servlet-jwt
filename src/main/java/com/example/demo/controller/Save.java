@@ -1,10 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.Security;
+import com.example.demo.annotation.Security;
 import com.example.demo.entity.Person;
-import com.example.demo.entity.Roles;
-import com.example.demo.entity.Users;
-import com.example.demo.service.UserService;
+import com.example.demo.tools.BaseParameter;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.List;
+
+import static java.lang.System.out;
 
 /**
  * Created by M.Hadiyan
@@ -19,36 +23,55 @@ import java.lang.reflect.Field;
  * Time: 9:14 AM
  **/
 @WebServlet(name = "Save", value = "/save.do")
-@Security()
+@Security(role = BaseParameter.admin)
 public class Save extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
-            reflect(req, Person.class);
+            Person person = setObjectFromRequest(req, Person.class);
+            out.printf("name::", person.getName());
+            out.printf("family::", person.getFamily());
+            out.printf("id", person.getId());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        System.out.println("IM HERE");
-        String userName = req.getParameterValues("name")[0];
-        String password = req.getParameterValues("family")[0];
-//        String roleName = req.getParameterValues("roleName")[0];
-        Users users = new Users();
-        users.setUserName(userName);
-        users.setPassword(password);
-        Roles roles = new Roles();
-//        roles.setRoleName(roleName);
-//        List<Roles> roles1 = new ArrayList<>();
-//        roles1.add(roles);
-//        users.setRoles(roles1);
-        UserService.getInstance().save(users);
         resp.sendRedirect("/middle.jsp");
     }
 
-    private void reflect(HttpServletRequest req, Class<?> className) throws Exception {
+    private <T> T setObjectFromRequest(HttpServletRequest req, Class<T> aClass) throws Exception {
+        List<String> params = new ArrayList<>();
+        Enumeration<String> parameterNames = req.getParameterNames();
+        while (parameterNames.hasMoreElements()) {
+            String paramName = parameterNames.nextElement();
+            out.write(paramName.getBytes());
+            params.add(paramName);
+        }
+        Field[] declaredFields = aClass.getDeclaredFields();
+        List<Field> fieldsList = new ArrayList<>(Arrays.asList(declaredFields));
+        T object = aClass.getDeclaredConstructor().newInstance();
+        for (String param : params) {
+//            for (Field declaredField : declaredFields) {
+//                if (param.equals(declaredField.getName())) {
+//                    // Apply set Method
+//                    declaredField.setAccessible(true);
+//                    declaredField.set(object, req.getParameter(param));
+//                }
+//            }
+            fieldsList
+                    .stream()
+                    .filter(f->f.getName().equals(param))
+                    .forEach(f->{
+                        f.setAccessible(true);
+                        try {
+                            f.set(object,req.getParameter(param));
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+        }
 
-        Field[] declaredFields = className.getDeclaredFields();
-        Object obj = className.newInstance();
+        return object;
 
     }
 }

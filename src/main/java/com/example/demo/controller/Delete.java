@@ -8,5 +8,9 @@ import javax.servlet.annotation.WebServlet;
  * Time: 9:14 AM
  **/
 @WebServlet(name = "signup", value = "/delete.do")
-public class Delete {
+public class Delete extends BaseServlet {
+    @Override
+    public void doService(Object o) {
+
+    }
 }
