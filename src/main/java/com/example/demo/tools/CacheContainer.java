@@ -1,5 +1,6 @@
 package com.example.demo.tools;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,18 @@ public class CacheContainer {
 
     public Map<String, List<String>> getCache() {
         return map;
+    }
+
+
+
+    private void peymayeshFile(File f) {
+        for (File listFile : f.listFiles()) {
+            if (listFile.isFile()) {
+                //create Map or update it
+            } else {
+                peymayeshFile(f);
+            }
+        }
     }
 
 
