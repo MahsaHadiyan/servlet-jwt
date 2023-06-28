@@ -31,7 +31,7 @@ public class MyFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String servletName = request.getHttpServletMapping().getServletName();
-        if (!CacheContainer.getInstance().getCache().containsKey(servletName)) {
+        if (!CacheContainer.getInstance().getRoleMap().containsKey(servletName)) {
             filterChain.doFilter(servletRequest, servletResponse);//sends request to next resource
         } else {
             Cookie[] cookies = ((HttpServletRequest) servletRequest).getCookies();

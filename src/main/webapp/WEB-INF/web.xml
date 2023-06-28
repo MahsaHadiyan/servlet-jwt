@@ -7,9 +7,6 @@
         <session-timeout>10</session-timeout>
     </session-config>
 
-<!--    <listener>-->
-<!--        <listener-class>com.example.demo.controller.MyListener</listener-class>-->
-<!--    </listener>-->
 
     <servlet>
         <servlet-name>main</servlet-name>

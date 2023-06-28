@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.tools.CacheContainer;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +15,8 @@ public class HomeController extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         try {
             URL resource = config.getServletContext().getResource("WEB-INF/classes");
-            peymayeshFile(new File(resource.getFile()));
+            CacheContainer cacheContainer = CacheContainer.getInstance();
+            cacheContainer.createCacheContainer(new File(resource.getFile()),".class");
         } catch (Exception e) {
             System.out.println("bad sho ke");
         }
